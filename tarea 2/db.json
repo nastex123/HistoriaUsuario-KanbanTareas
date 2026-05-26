@@ -1,0 +1,12 @@
+{
+  "users": [
+    {
+      "name": "jhon",
+      "email": "test@test.com",
+      "password": "1111",
+      "role": "admin",
+      "id": "l2mXbwuSLTo"
+    }
+  ],
+  "$schema": "./node_modules/json-server/schema.json"
+}

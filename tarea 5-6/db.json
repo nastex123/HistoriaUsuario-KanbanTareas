@@ -1,0 +1,44 @@
+{
+  "users": [
+    {
+      "name": "Brandon",
+      "email": "test@test.com",
+      "password": "1111",
+      "role": "admin",
+      "id": "7bQngGVaAjE"
+    },
+    {
+      "name": "jhon",
+      "email": "test1@test.com",
+      "password": "1111",
+      "role": "user",
+      "id": "UgcQfvCN9y8"
+    },
+    {
+      "name": "lucho",
+      "email": "test2@test.com",
+      "password": "1111",
+      "role": "user",
+      "id": "A3EsIX93BxU"
+    }
+  ],
+  "tasks": [
+    {
+      "title": "sa",
+      "description": "sadsa",
+      "category": "Engineering",
+      "status": "todo",
+      "assignedTo": "UgcQfvCN9y8",
+      "id": "3-85M7IDZPo"
+    },
+    {
+      "title": "siza",
+      "description": "pene",
+      "category": "Engineering",
+      "status": "in-progress",
+      "assignedTo": "A3EsIX93BxU",
+      "id": "SL3yYD4lKDI"
+    }
+  ],
+  "$schema": "./node_modules/json-server/schema.json"
+}
