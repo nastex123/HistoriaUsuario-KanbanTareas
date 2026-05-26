@@ -1,0 +1,231 @@
+<!doctype html>
+<html class="light" lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Riwiflow Dashboard - Kanban</title>
+    <!-- Tailwind CSS y configuración -->
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "secondary-fixed": "#e3e1ed",
+                        tertiary: "#6b3000",
+                        "surface-container-lowest": "#ffffff",
+                        "on-primary-fixed-variant": "#5b00c5",
+                        "on-tertiary-container": "#ffc19e",
+                        "surface-container-low": "#f9f1ff",
+                        secondary: "#5d5d67",
+                        "on-secondary-container": "#64636d",
+                        "inverse-on-surface": "#f6eefc",
+                        "surface-dim": "#dfd7e5",
+                        error: "#ba1a1a",
+                        "secondary-fixed-dim": "#c7c5d1",
+                        "on-primary-container": "#dac5ff",
+                        "surface-variant": "#e8e0ee",
+                        surface: "#fef7ff",
+                        "inverse-primary": "#d3bbff",
+                        "on-error": "#ffffff",
+                        "surface-container-highest": "#e8e0ee",
+                        "secondary-container": "#e3e1ed",
+                        "on-primary-fixed": "#250059",
+                        "on-secondary-fixed-variant": "#46464f",
+                        "surface-container": "#f3ebf9",
+                        "primary-container": "#6d28d9",
+                        "outline-variant": "#ccc3d7",
+                        "primary-fixed": "#ebddff",
+                        "on-tertiary": "#ffffff",
+                        "surface-container-high": "#ede5f3",
+                        "surface-bright": "#fef7ff",
+                        "primary-fixed-dim": "#d3bbff",
+                        "on-primary": "#ffffff",
+                        outline: "#7b7486",
+                        "on-secondary": "#ffffff",
+                        "on-tertiary-fixed-variant": "#743400",
+                        background: "#fef7ff",
+                        "tertiary-container": "#8f4200",
+                        "on-secondary-fixed": "#1a1b23",
+                        "error-container": "#ffdad6",
+                        "on-background": "#1d1a24",
+                        primary: "#5300b7",
+                        "surface-tint": "#7331df",
+                        "on-error-container": "#93000a",
+                        "on-surface-variant": "#4a4455",
+                        "tertiary-fixed-dim": "#ffb68b",
+                        "on-surface": "#1d1a24",
+                        "on-tertiary-fixed": "#321300",
+                        "tertiary-fixed": "#ffdbc8",
+                        "inverse-surface": "#332f39",
+                    },
+                    borderRadius: {
+                        DEFAULT: "0.125rem",
+                        lg: "0.25rem",
+                        xl: "0.5rem",
+                        full: "0.75rem",
+                    },
+                    spacing: {
+                        md: "16px",
+                        xxl: "48px",
+                        xl: "32px",
+                        xs: "4px",
+                        sm: "8px",
+                        gutter: "24px",
+                        lg: "24px",
+                        "margin-mobile": "16px",
+                    },
+                    fontFamily: {
+                        "display-lg-mobile": ["Inter"],
+                        "body-sm": ["Inter"],
+                        "label-sm": ["Inter"],
+                        "title-sm": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "display-lg": ["Inter"],
+                        "body-md": ["Inter"],
+                        "label-md": ["Inter"],
+                    },
+                    fontSize: {
+                        "display-lg-mobile": [
+                            "30px",
+                            {
+                                lineHeight: "38px",
+                                letterSpacing: "-0.02em",
+                                fontWeight: "600",
+                            },
+                        ],
+                        "body-sm": ["14px", { lineHeight: "20px", fontWeight: "400" }],
+                        "label-sm": [
+                            "12px",
+                            {
+                                lineHeight: "16px",
+                                letterSpacing: "0.05em",
+                                fontWeight: "600",
+                            },
+                        ],
+                        "title-sm": ["18px", { lineHeight: "28px", fontWeight: "500" }],
+                        "headline-md": [
+                            "24px",
+                            {
+                                lineHeight: "32px",
+                                letterSpacing: "-0.01em",
+                                fontWeight: "600",
+                            },
+                        ],
+                        "display-lg": [
+                            "36px",
+                            {
+                                lineHeight: "44px",
+                                letterSpacing: "-0.02em",
+                                fontWeight: "600",
+                            },
+                        ],
+                        "body-md": ["16px", { lineHeight: "24px", fontWeight: "400" }],
+                        "label-md": ["14px", { lineHeight: "20px", fontWeight: "500" }],
+                    },
+                },
+            },
+        };
+    </script>
+    <!-- Fuentes e iconos -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <!-- Estilos personalizados -->
+    <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body class="bg-background text-on-background overflow-hidden h-screen flex">
+    <!-- SideNavBar -->
+    <aside
+        class="hidden md:flex flex-col pt-md pb-xl gap-xs h-full bg-surface-container-low border-r border-outline-variant w-[280px] shrink-0">
+        <div class="px-gutter mb-xl">
+            <h1 class="font-headline-md text-headline-md font-bold text-primary">
+                Testing
+            </h1>
+            <p class="font-body-sm text-body-sm text-on-surface-variant">
+                Product Team
+            </p>
+        </div>
+        <nav class="flex-1 space-y-1">
+            <a data-link
+                class="flex items-center bg-primary-fixed text-on-primary-fixed-variant rounded-lg mx-2 px-4 py-3 font-body-sm text-body-sm transition-all scale-[0.98]"
+                href="/dashboard">
+                <span class="material-symbols-outlined mr-3" data-icon="dashboard">dashboard</span>
+                <span>Dashboard</span>
+            </a>
+            <a data-link
+                class="flex items-center text-secondary hover:text-primary hover:bg-primary-container/10 px-4 py-3 mx-2 font-body-sm text-body-sm rounded-lg transition-all"
+                href="/projects">
+                <span class="material-symbols-outlined mr-3" data-icon="assignment">assignment</span>
+                <span>Projects</span>
+            </a>
+            <a data-link
+                class="flex items-center text-secondary hover:text-primary hover:bg-primary-container/10 px-4 py-3 mx-2 font-body-sm text-body-sm rounded-lg transition-all"
+                href="/team">
+                <span class="material-symbols-outlined mr-3" data-icon="group">group</span>
+                <span>Team</span>
+            </a>
+            <a data-link
+                class="flex items-center text-secondary hover:text-primary hover:bg-primary-container/10 px-4 py-3 mx-2 font-body-sm text-body-sm rounded-lg transition-all"
+                href="/reports">
+                <span class="material-symbols-outlined mr-3" data-icon="bar_chart">bar_chart</span>
+                <span>Reports</span>
+            </a>
+            <a data-link
+                class="flex items-center text-secondary hover:text-primary hover:bg-primary-container/10 px-4 py-3 mx-2 font-body-sm text-body-sm rounded-lg transition-all"
+                href="/settings">
+                <span class="material-symbols-outlined mr-3" data-icon="settings">settings</span>
+                <span>Settings</span>
+            </a>
+        </nav>
+        <div class="px-4 mt-auto">
+            <button id="newProjectBtn" type="button"
+                class="w-full bg-primary text-on-primary py-3 rounded-xl font-label-md text-label-md flex items-center justify-center gap-2 shadow-sm hover:opacity-90 transition-opacity">
+                <span class="material-symbols-outlined" data-icon="add">add</span>
+                New Project
+            </button>
+        </div>
+    </aside>
+    <main class="flex-1 flex flex-col min-w-0">
+        <!-- TopAppBar -->
+        <header
+            class="flex justify-between items-center h-16 px-gutter w-full bg-surface border-b border-outline-variant z-40">
+            <div class="flex items-center gap-4 flex-1">
+                <div class="relative max-w-md w-full">
+                    <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline"
+                        data-icon="search">search</span>
+                    <input
+                        class="w-full pl-10 pr-4 py-2 bg-surface-container border border-outline-variant rounded-full font-body-md text-body-md focus:outline-none focus:ring-2 focus:ring-primary/20"
+                        placeholder="Search tasks or files..." type="text" />
+                </div>
+            </div>
+            <div class="flex items-center gap-4 ml-4">
+                <button
+                    class="material-symbols-outlined text-on-surface-variant hover:bg-surface-container-low p-2 rounded-full transition-colors"
+                    data-icon="notifications">
+                    notifications
+                </button>
+                <button
+                    class="material-symbols-outlined text-on-surface-variant hover:bg-surface-container-low p-2 rounded-full transition-colors"
+                    data-icon="help_outline">
+                    help_outline
+                </button>
+                <img alt="User profile" class="w-8 h-8 rounded-full border border-outline-variant object-cover"
+                    data-alt="A professional high-resolution close-up portrait of a corporate professional in a modern office. The individual is wearing a smart minimalist outfit. The background consists of soft out-of-focus architectural lines of a contemporary tech hub with soft purple and lavender lighting, maintaining a bright and optimistic light-mode aesthetic."
+                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuC2-sF_Qd9jEF33fUrS3vMvdoA8rbw2_a6jzv7r_6oDikCkrertidHwLgqAtWuKvLnRx7Lcsi79ZYj4FBaL_pETFxeyeF27_PhXy-KnuioiYgCwYTKcWDEuZoRksSf8Jb0_ZmsxJkpTFGZ2bW8aTl5fhcA4DOHQQal_vu1KVBcizoM56dHRc7Ce_vkUul2aL96DSeDmqR4YdfGUuoIQkUF_F8AX45U05tmCFg7YyPH6xtgAx7e31u5_5e2rQxm_tgBEgnhV-LsqsEDH" />
+            </div>
+        </header>
+        <!-- Content Area (SPA) -->
+        <div id="app-view" class="flex-1 overflow-x-auto p-gutter custom-scrollbar">
+            <!-- El contenido se cargará dinámicamente -->
+        </div>
+    </main>
+    <script type="module" src="js/main.js"></script>
+</body>
+
+</html>
