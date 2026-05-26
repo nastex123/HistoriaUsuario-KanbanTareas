@@ -15,4 +15,4 @@ document.addEventListener('DOMContentLoaded', () => {
 window.addEventListener('popstate', (event) => {
   const path = event.state?.path || window.location.pathname;
   navigateTo(path, false);
-});
+});//test
