@@ -1,0 +1,67 @@
+{
+  "//": "Standardized user and task data in English",
+  "users": [
+    {
+      "name": "Brandon",
+      "email": "test@test.com",
+      "password": "1111",
+      "role": "admin",
+      "id": "7bQngGVaAjE"
+    },
+    {
+      "name": "jhon",
+      "email": "test1@test.com",
+      "password": "1111",
+      "role": "user",
+      "id": "UgcQfvCN9y8"
+    },
+    {
+      "name": "lucho",
+      "email": "test2@test.com",
+      "password": "1111",
+      "role": "user",
+      "id": "A3EsIX93BxU"
+    }
+  ],
+  "tasks": [
+    {
+      "title": "sa",
+      "description": "sadsa",
+      "category": "Marketing",
+      "status": "todo",
+      "assignedTo": "UgcQfvCN9y8",
+      "statusText": "3d",
+      "statusIcon": "schedule",
+      "id": "3-85M7IDZPo"
+    },
+    {
+      "title": "siza",
+      "description": "Improve rendering performance on mobile devices",
+      "category": "Engineering",
+      "status": "in-progress",
+      "assignedTo": "A3EsIX93BxU",
+      "statusText": "today2",
+      "statusIcon": "hourglass_empty",
+      "id": "SL3yYD4lKDI"
+    },
+    {
+      "title": "teta",
+      "description": "megustan las tetas",
+      "category": "Legal",
+      "status": "in-review",
+      "assignedTo": "UgcQfvCN9y8",
+      "id": "L1BOtexmos0"
+    },
+    {
+      "title": "lisua",
+      "description": "jeje",
+      "category": "Design",
+      "status": "done",
+      "assignedTo": "UgcQfvCN9y8",
+      "statusText": "mismo dia",
+      "statusIcon": "check_circle",
+      "id": "zbLdxGqvSVA"
+    }
+  ],
+  "$schema": "./node_modules/json-server/schema.json"
+}

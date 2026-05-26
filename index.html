@@ -1,0 +1,68 @@
+<!doctype html>
+<html class="light" lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Riwiflow Dashboard - Kanban</title>
+    <!-- Tailwind CSS y configuración -->
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script src="js/tailwind-config.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body class="bg-background text-on-background overflow-hidden h-screen flex">
+    <!-- Main Sidebar: Navigation and Global Branding -->
+    <aside class="hidden md:flex flex-col pt-md pb-xl gap-xs h-full bg-surface-container-low border-r border-outline-variant w-[280px] shrink-0">
+        <div class="px-gutter mb-xl">
+            <h1 class="font-headline-md text-headline-md font-bold text-primary">Testing</h1>
+            <p class="font-body-sm text-body-sm text-on-surface-variant">Product Team</p>
+        </div>
+        <nav class="flex-1 space-y-1">
+            <a data-link class="flex items-center bg-primary-fixed text-on-primary-fixed-variant rounded-lg mx-2 px-4 py-3 font-body-sm text-body-sm transition-all scale-[0.98]" href="/dashboard">
+                <span class="material-symbols-outlined mr-3">dashboard</span><span>Dashboard</span>
+            </a>
+            <a data-link class="flex items-center text-secondary hover:text-primary hover:bg-primary-container/10 px-4 py-3 mx-2 font-body-sm text-body-sm rounded-lg transition-all" href="/projects">
+                <span class="material-symbols-outlined mr-3">assignment</span><span>Projects</span>
+            </a>
+            <a data-link class="flex items-center text-secondary hover:text-primary hover:bg-primary-container/10 px-4 py-3 mx-2 font-body-sm text-body-sm rounded-lg transition-all" href="/team">
+                <span class="material-symbols-outlined mr-3">group</span><span>Team</span>
+            </a>
+            <a data-link class="flex items-center text-secondary hover:text-primary hover:bg-primary-container/10 px-4 py-3 mx-2 font-body-sm text-body-sm rounded-lg transition-all" href="/reports">
+                <span class="material-symbols-outlined mr-3">bar_chart</span><span>Reports</span>
+            </a>
+            <a data-link class="flex items-center text-secondary hover:text-primary hover:bg-primary-container/10 px-4 py-3 mx-2 font-body-sm text-body-sm rounded-lg transition-all" href="/settings">
+                <span class="material-symbols-outlined mr-3">settings</span><span>Settings</span>
+            </a>
+        </nav>
+        <div class="px-4 mt-auto">
+            <button id="newProjectBtn" type="button" class="w-full bg-primary text-on-primary py-3 rounded-xl font-label-md text-label-md flex items-center justify-center gap-2 shadow-sm hover:opacity-90 transition-opacity">
+                <span class="material-symbols-outlined">add</span> New Project
+            </button>
+        </div>
+    </aside>
+    <!-- Main Content Area -->
+    <main class="flex-1 flex flex-col min-w-0">
+        <!-- Global Header: Search, Notifications, and User Profile -->
+        <header class="flex justify-between items-center h-16 px-gutter w-full bg-surface border-b border-outline-variant z-40">
+            <div class="flex items-center gap-4 flex-1">
+                <div class="relative max-w-md w-full">
+                    <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline">search</span>
+                    <input class="w-full pl-10 pr-4 py-2 bg-surface-container border border-outline-variant rounded-full font-body-md text-body-md focus:outline-none focus:ring-2 focus:ring-primary/20" placeholder="Search tasks or files..." type="text" />
+                </div>
+            </div>
+            <div class="flex items-center gap-4 ml-4">
+                <button class="material-symbols-outlined text-on-surface-variant hover:bg-surface-container-low p-2 rounded-full transition-colors">notifications</button>
+                <button class="material-symbols-outlined text-on-surface-variant hover:bg-surface-container-low p-2 rounded-full transition-colors">help_outline</button>
+                <button onclick="logout()" class="material-symbols-outlined text-error hover:bg-error-container/10 p-2 rounded-full transition-colors" title="Logout">logout</button>
+                <span id="user-name-display" class="font-label-md text-label-md text-on-surface-variant hidden sm:block"></span>
+                <img alt="User profile" class="w-8 h-8 rounded-full border border-outline-variant object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC2-sF_Qd9jEF33fUrS3vMvdoA8rbw2_a6jzv7r_6oDikCkrertidHwLgqAtWuKvLnRx7Lcsi79ZYj4FBaL_pETFxeyeF27_PhXy-KnuioiYgCwYTKcWDEuZoRksSf8Jb0_ZmsxJkpTFGZ2bW8aTl5fhcA4DOHQQal_vu1KVBcizoM56dHRc7Ce_vkUul2aL96DSeDmqR4YdfGUuoIQkUF_F8AX45U05tmCFg7YyPH6xtgAx7e31u5_5e2rQxm_tgBEgnhV-LsqsEDH" />
+            </div>
+        </header>
+        <!-- Viewport Container for SPA -->
+        <div id="app-view" class="flex-1 overflow-x-auto p-gutter custom-scrollbar"></div>
+    </main>
+    <!-- Core Application Script -->
+    <script type="module" src="js/main.js"></script>
+</body>
+</html>
