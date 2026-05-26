@@ -29,5 +29,3 @@ A professional task management system built with Vanilla JavaScript, Tailwind CS
 ## Default Credentials
 - **Admin**: `test@test.com` / `1111`
 - **User**: `test1@test.com` / `1111`
-
-# by: Brandon Carranza & Juan Gale
