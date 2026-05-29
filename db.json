@@ -7,20 +7,6 @@
       "password": "1111",
       "role": "admin",
       "id": "7bQngGVaAjE"
-    },
-    {
-      "name": "jhon",
-      "email": "test1@test.com",
-      "password": "1111",
-      "role": "user",
-      "id": "UgcQfvCN9y8"
-    },
-    {
-      "name": "lucho",
-      "email": "test2@test.com",
-      "password": "1111",
-      "role": "user",
-      "id": "A3EsIX93BxU"
     }
   ],
   "tasks": [
@@ -38,7 +24,7 @@
       "title": "siza",
       "description": "Improve rendering performance on mobile devices",
       "category": "Engineering",
-      "status": "in-progress",
+      "status": "todo",
       "assignedTo": "A3EsIX93BxU",
       "statusText": "today2",
       "statusIcon": "hourglass_empty",
@@ -48,7 +34,7 @@
       "title": "teta",
       "description": "megustan las tetas",
       "category": "Legal",
-      "status": "in-review",
+      "status": "in-progress",
       "assignedTo": "UgcQfvCN9y8",
       "id": "L1BOtexmos0"
     },
@@ -61,6 +47,16 @@
       "statusText": "mismo dia",
       "statusIcon": "check_circle",
       "id": "zbLdxGqvSVA"
+    },
+    {
+      "title": "AS",
+      "description": "DMDAMD",
+      "category": "Engineering",
+      "status": "done",
+      "assignedTo": "A3EsIX93BxU",
+      "statusText": "",
+      "statusIcon": "",
+      "id": "Tj3Nw6w3vGs"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"
