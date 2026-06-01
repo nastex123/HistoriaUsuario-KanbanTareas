@@ -1,6 +1,6 @@
-import { initRouter, handleLinkClick } from './router.js';
+import { initRouter } from './router.js';
 
-// Sesión y Logout
+// Sesion y Logout
 const session = localStorage.getItem('riwiflow_session');
 if (!session) {
     window.location.href = 'login.html';
@@ -11,7 +11,7 @@ window.logout = function() {
     window.location.href = 'login.html';
 };
 
-// Inicialización Global
+// Inicializacion Global
 document.addEventListener('DOMContentLoaded', () => {
     const userNameDisplay = document.getElementById('user-name-display');
     if (userNameDisplay && session) {
@@ -19,5 +19,4 @@ document.addEventListener('DOMContentLoaded', () => {
         userNameDisplay.textContent = userData.name;
     }
     initRouter();
-    document.addEventListener('click', handleLinkClick);
 });

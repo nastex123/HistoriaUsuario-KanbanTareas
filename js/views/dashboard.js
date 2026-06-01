@@ -1,4 +1,3 @@
-// js/views/dashboard.js
 export function dashboardView() {
   return `
     <div class="dashboard-container h-full flex flex-col">
@@ -11,7 +10,7 @@ export function dashboardView() {
               <span id="todo-count" class="bg-surface-container-high text-on-surface-variant px-2 py-0.5 rounded-full font-label-sm text-label-sm">0</span>
             </div>
           </div>
-          <div id="todo-column" class="flex-1 space-y-md p-2 bg-surface-container-low/50 rounded-xl overflow-y-auto custom-scrollbar"></div>
+          <div id="todo-column" class="kanban-dropzone flex-1 space-y-md p-2 bg-surface-container-low/50 rounded-xl overflow-y-auto custom-scrollbar" data-status="todo"></div>
         </div>
         <!-- In Progress column -->
         <div class="kanban-column flex flex-col w-1/4 min-w-[280px] h-full">
@@ -21,7 +20,7 @@ export function dashboardView() {
               <span id="progress-count" class="bg-surface-container-high text-on-surface-variant px-2 py-0.5 rounded-full font-label-sm text-label-sm">0</span>
             </div>
           </div>
-          <div id="progress-column" class="flex-1 space-y-md p-2 bg-surface-container-low/50 rounded-xl overflow-y-auto custom-scrollbar"></div>
+          <div id="progress-column" class="kanban-dropzone flex-1 space-y-md p-2 bg-surface-container-low/50 rounded-xl overflow-y-auto custom-scrollbar" data-status="in-progress"></div>
         </div>
         <!-- In Review column -->
         <div class="kanban-column flex flex-col w-1/4 min-w-[280px] h-full">
@@ -31,7 +30,7 @@ export function dashboardView() {
               <span id="review-count" class="bg-surface-container-high text-on-surface-variant px-2 py-0.5 rounded-full font-label-sm text-label-sm">0</span>
             </div>
           </div>
-          <div id="review-column" class="flex-1 space-y-md p-2 bg-surface-container-low/50 rounded-xl overflow-y-auto custom-scrollbar"></div>
+          <div id="review-column" class="kanban-dropzone flex-1 space-y-md p-2 bg-surface-container-low/50 rounded-xl overflow-y-auto custom-scrollbar" data-status="in-review"></div>
         </div>
         <!-- Done column -->
         <div class="kanban-column flex flex-col w-1/4 min-w-[280px] h-full">
@@ -41,7 +40,7 @@ export function dashboardView() {
               <span id="done-count" class="bg-surface-container-high text-on-surface-variant px-2 py-0.5 rounded-full font-label-sm text-label-sm">0</span>
             </div>
           </div>
-          <div id="done-column" class="flex-1 space-y-md p-2 bg-surface-container-low/50 rounded-xl overflow-y-auto custom-scrollbar"></div>
+          <div id="done-column" class="kanban-dropzone flex-1 space-y-md p-2 bg-surface-container-low/50 rounded-xl overflow-y-auto custom-scrollbar" data-status="done"></div>
         </div>
       </div>
     </div>
@@ -105,7 +104,7 @@ export function dashboardView() {
       </div>
     </div>
 
-    <!-- Modal edición ADMIN (completo) -->
+    <!-- Modal edicion ADMIN (completo) -->
     <div id="editTaskModal" class="fixed inset-0 bg-black/50 flex items-center justify-center z-50 hidden">
       <div class="bg-surface rounded-xl p-6 w-full max-w-md">
         <h3 class="text-headline-md mb-4">Edit Task (Admin)</h3>
@@ -174,7 +173,7 @@ export function dashboardView() {
       </div>
     </div>
 
-    <!-- Modal edición CODER (solo descripción y estado) -->
+    <!-- Modal edicion CODER (solo descripcion y estado) -->
     <div id="editTaskCoderModal" class="fixed inset-0 bg-black/50 flex items-center justify-center z-50 hidden">
       <div class="bg-surface rounded-xl p-6 w-full max-w-md">
         <h3 class="text-headline-md mb-4">Edit Task (Coder)</h3>
@@ -225,11 +224,29 @@ export function dashboardView() {
       .custom-scrollbar::-webkit-scrollbar { width: 6px; }
       .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
       .custom-scrollbar::-webkit-scrollbar-thumb { background: #ccc3d7; border-radius: 10px; }
-      .task-card { transition: transform 0.2s ease; position: relative; }
-      .task-card:hover { transform: translateY(-2px); }
+      .task-card { 
+        transition: transform 0.2s ease, box-shadow 0.2s ease; 
+        position: relative;
+        cursor: grab;
+        user-select: none;
+      }
+      .task-card:active { cursor: grabbing; }
+      .task-card.dragging {
+        opacity: 0.5;
+        cursor: grabbing;
+      }
+      .task-card:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+      .kanban-dropzone {
+        min-height: 200px;
+        transition: background-color 0.2s ease;
+      }
+      .kanban-dropzone.drag-over {
+        background-color: rgba(59, 130, 246, 0.1);
+        border: 2px dashed #3b82f6;
+      }
       .edit-task-btn {
         position: absolute;
-        top: 50px;
+        top: 8px;
         right: 8px;
         background: rgba(0,0,0,0.05);
         border-radius: 50%;
@@ -280,6 +297,7 @@ export async function initDashboard() {
   if (isAdmin) {
     setupCreateModal(users);
     setupEditAdminModal(users);
+    setupDragAndDrop();
   }
   setupEditCoderModal();
 }
@@ -331,7 +349,9 @@ async function loadTasks(users, currentUser, isAdmin) {
       const category = task.category || 'Design';
       const card = document.createElement('div');
       card.className = 'task-card bg-surface border border-outline-variant border-l-4 border-l-primary rounded-xl p-md shadow-sm';
-      card.dataset.taskId = task.id;
+      card.setAttribute('draggable', isAdmin ? 'true' : 'false');
+      card.setAttribute('data-task-id', task.id);
+      card.setAttribute('data-status', status);
 
       let showEditBtn = false;
       if (isAdmin) showEditBtn = true;
@@ -376,6 +396,7 @@ async function loadTasks(users, currentUser, isAdmin) {
         else alert('You are not allowed to edit this task.');
       });
     });
+
   } catch (err) { console.error('Error loading tasks:', err); }
 }
 
@@ -389,7 +410,81 @@ function escapeHtml(str) {
   });
 }
 
-// ---------- Modal creación (admin) ----------
+function setupDragAndDrop() {
+  const cards = document.querySelectorAll('.task-card[draggable="true"]');
+  const dropzones = document.querySelectorAll('.kanban-dropzone');
+  
+  let draggedItem = null;
+
+  cards.forEach(card => {
+    card.addEventListener('dragstart', (e) => {
+      draggedItem = card;
+      card.classList.add('dragging');
+      e.dataTransfer.setData('text/plain', card.getAttribute('data-task-id'));
+      e.dataTransfer.effectAllowed = 'move';
+    });
+
+    card.addEventListener('dragend', (e) => {
+      card.classList.remove('dragging');
+      draggedItem = null;
+      dropzones.forEach(zone => {
+        zone.classList.remove('drag-over');
+      });
+    });
+  });
+
+  dropzones.forEach(zone => {
+    zone.addEventListener('dragover', (e) => {
+      e.preventDefault();
+      e.dataTransfer.dropEffect = 'move';
+      zone.classList.add('drag-over');
+    });
+
+    zone.addEventListener('dragleave', (e) => {
+      zone.classList.remove('drag-over');
+    });
+
+    zone.addEventListener('drop', async (e) => {
+      e.preventDefault();
+      zone.classList.remove('drag-over');
+      
+      const taskId = e.dataTransfer.getData('text/plain');
+      const newStatus = zone.getAttribute('data-status');
+      const draggedCard = document.querySelector(`.task-card[data-task-id="${taskId}"]`);
+      
+      if (draggedCard && draggedCard.getAttribute('data-status') !== newStatus) {
+        try {
+          const response = await fetch(`http://localhost:3000/tasks/${taskId}`);
+          const task = await response.json();
+          
+          task.status = newStatus;
+          
+          const putResponse = await fetch(`http://localhost:3000/tasks/${taskId}`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(task)
+          });
+          
+          if (putResponse.ok) {
+            const session = localStorage.getItem('riwiflow_session');
+            const currentUser = session ? JSON.parse(session) : null;
+            const isAdmin = currentUser?.role === 'admin';
+            const usersRes = await fetch('http://localhost:3000/users');
+            const updatedUsers = await usersRes.json();
+            await loadTasks(updatedUsers, currentUser, isAdmin);
+            setupDragAndDrop();
+          } else {
+            alert('Error moving task');
+          }
+        } catch (err) {
+          console.error('Error:', err);
+          alert('Connection error');
+        }
+      }
+    });
+  });
+}
+
 function setupCreateModal(users) {
   const modal = document.getElementById('taskModal');
   const form = document.getElementById('taskForm');
@@ -398,7 +493,7 @@ function setupCreateModal(users) {
   const assignSelect = document.getElementById('taskAssign');
   const categorySelect = document.getElementById('taskCategory');
 
-  const assignableUsers = users.filter(u => u.role?.toLowerCase() === 'user');
+  const assignableUsers = users.filter(u => u.role?.toLowerCase() !== 'admin');
   assignSelect.innerHTML = '<option value="">Select a user</option>';
   assignableUsers.forEach(u => {
     const option = document.createElement('option');
@@ -437,8 +532,9 @@ function setupCreateModal(users) {
         const usersRes = await fetch('http://localhost:3000/users');
         const updatedUsers = await usersRes.json();
         await loadTasks(updatedUsers, currentUser, isAdmin);
-        // Actualizar selects
-        const assignableUpdated = updatedUsers.filter(u => u.role?.toLowerCase() === 'user');
+        setupDragAndDrop();
+        
+        const assignableUpdated = updatedUsers.filter(u => u.role?.toLowerCase() !== 'admin');
         assignSelect.innerHTML = '<option value="">Select a user</option>';
         assignableUpdated.forEach(u => {
           const option = document.createElement('option');
@@ -461,7 +557,6 @@ function setupCreateModal(users) {
   });
 }
 
-// ---------- Modal edición ADMIN ----------
 let currentEditTaskId = null;
 function setupEditAdminModal(users) {
   const modal = document.getElementById('editTaskModal');
@@ -469,7 +564,7 @@ function setupEditAdminModal(users) {
   const closeBtn = document.getElementById('closeEditModalBtn');
   const editAssignSelect = document.getElementById('editAssign');
 
-  const assignableUsers = users.filter(u => u.role?.toLowerCase() === 'user');
+  const assignableUsers = users.filter(u => u.role?.toLowerCase() !== 'admin');
   editAssignSelect.innerHTML = '<option value="">Select a user</option>';
   assignableUsers.forEach(u => {
     const option = document.createElement('option');
@@ -510,6 +605,7 @@ function setupEditAdminModal(users) {
         const usersRes = await fetch('http://localhost:3000/users');
         const updatedUsers = await usersRes.json();
         await loadTasks(updatedUsers, currentUser, isAdmin);
+        setupDragAndDrop();
       } else alert('Error updating task');
     } catch (err) { console.error(err); alert('Server error'); }
   });
@@ -530,7 +626,7 @@ async function openEditAdminModal(taskId, users) {
     document.getElementById('editStatusIcon').value = task.statusIcon || '';
 
     const assignSelect = document.getElementById('editAssign');
-    const assignableUsers = users.filter(u => u.role?.toLowerCase() === 'user');
+    const assignableUsers = users.filter(u => u.role?.toLowerCase() !== 'admin');
     assignSelect.innerHTML = '<option value="">Select a user</option>';
     assignableUsers.forEach(u => {
       const option = document.createElement('option');
@@ -544,7 +640,6 @@ async function openEditAdminModal(taskId, users) {
   } catch (err) { console.error(err); alert('Could not load task data'); }
 }
 
-// ---------- Modal edición CODER ----------
 let currentCoderTaskId = null;
 function setupEditCoderModal() {
   const modal = document.getElementById('editTaskCoderModal');
@@ -581,6 +676,7 @@ function setupEditCoderModal() {
         const usersRes = await fetch('http://localhost:3000/users');
         const updatedUsers = await usersRes.json();
         await loadTasks(updatedUsers, currentUser, isAdmin);
+        if (isAdmin) setupDragAndDrop();
       } else alert('Error updating task');
     } catch (err) { console.error(err); alert('Server error'); }
   });
